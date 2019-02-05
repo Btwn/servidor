@@ -1,22 +1,31 @@
-# Express-Vue MVC Starter Kit
+# Adonis fullstack application
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/express-vue/express-vue-mvc-starter.svg)](https://greenkeeper.io/)
+This is the fullstack boilerplate for AdonisJs, it comes pre-configured with.
 
-This is a simple basic starter kit to use Express-Vue
+1. Bodyparser
+2. Session
+3. Authentication
+4. Web security middleware
+5. CORS
+6. Edge template engine
+7. Lucid ORM
+8. Migrations and seeds
 
-Documentation is at [express-vue/express-vue](https://github.com/express-vue/express-vue)
+## Setup
+
+Use the adonis command to install the blueprint
+
+```bash
+adonis new yardstick
+```
+
+or manually clone the repo and then run `npm install`.
 
 
-**To use this**
+### Migrations
 
-Copy this repo, change the package.json, and go through the router.js file and change the settings for your cookie session storage.
+Run the following command to run startup migrations.
 
-To Run
-
-1. `npm install`
-2. `npm start`
-
-**Building and Running in prod**
-
-1. `ENV=production node app`
-
+```js
+adonis migration:run
+```
