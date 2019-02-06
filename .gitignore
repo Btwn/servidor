@@ -2,9 +2,6 @@
 node_modules
 package-lock.json
 
-# Bower modules
-public/vendors
-
 # Adonis directory for storing tmp files
 tmp
 
@@ -13,3 +10,7 @@ tmp
 
 # The development sqlite file
 database/development.sqlite
+
+# VSCode & Webstorm history directories
+.history
+.idea
