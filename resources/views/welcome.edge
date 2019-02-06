@@ -2,11 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  {{ style('//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons') }}
+  {{ style('https://unpkg.com/vue-material@beta/dist/vue-material.min.css') }}
+  {{ style('https://unpkg.com/vue-material@beta/dist/theme/default.css') }}
   <title>Hello Adonis</title>
-  {{--  {{ style('style') }}  --}}
 </head>
 <body>
   <div id="app">Loading...</div>
+  {{--  {{ script('https://unpkg.com/vue-material@beta') }}  --}}
   {{ script('dist/bundle.js') }}
 </body>
 </html>

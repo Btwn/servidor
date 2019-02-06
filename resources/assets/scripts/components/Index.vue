@@ -4,6 +4,7 @@
 		<router-link to="/about">Acerca de esta paginas</router-link>
 		<p>{{ count }}</p>
 		<input type="button" value="incrementa" @click.prevent="increment">
+		<md-button>Default</md-button>
 	</div>
 </template>
 
