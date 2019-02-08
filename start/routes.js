@@ -16,7 +16,18 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.get('api', 'ApiController.index')
-// Route.on('/').render('welcome')
+Route.group(()=>{
+    Route.get('', 'ApiController.All')
+}).prefix('api')
+
+Route.group(()=>{
+   Route.post('arbv/:title','ArbvController.AllTitle')
+
+}).prefix('api')
+
+Route.group(()=>{
+
+})
+
 
 Route.any('*', ({view}) =>  view.render('welcome'))
