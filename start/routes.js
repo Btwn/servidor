@@ -16,7 +16,11 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.get('api', 'ApiController.index')
-// Route.on('/').render('welcome')
+Route.group(() => {
+	Route.get('/', 'ApiController.index')
+	Route.get('orig5000', 'ApiController.orig5000')
+	Route.get('orig3100', 'ApiController.orig3100')
+	Route.get('repo5000', 'ApiController.repo5000')
+}).prefix('api/files')
 
 Route.any('*', ({view}) =>  view.render('welcome'))
