@@ -23,4 +23,8 @@ Route.group(() => {
 	Route.get('repo5000', 'ApiController.repo5000')
 }).prefix('api/files')
 
+Route.group(() => {
+	Route.get('/', 'ReadFileController.index')
+}).prefix('api/file')
+
 Route.any('*', ({view}) =>  view.render('welcome'))

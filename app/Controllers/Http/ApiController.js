@@ -3,7 +3,7 @@
 const Env = use('Env')
 const fs = require('fs')
 const path = require('path')
-const { listarArchivos } = require('../../Utilerias/OperadoresArchivos/listarArchivos')
+const { listarArchivos } = require('../../Tools/OperadoresArchivos/listarArchivos')
 
 class ApiController {
 	async index () {

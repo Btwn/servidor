@@ -19,5 +19,6 @@ exports.recodificarArchivo = (archivo, codificacionFinal) => {
  * @archivo variable que alamacena la ruta del archivo
  ***/
 exports.detectarCodificacion = archivo => {
-    return chardet.detectFileSync(archivo)
+    codificacion = chardet.detectFileSync(archivo)
+    return codificacion == 'UTF-8' ? codificacion : 'Latin1'
 }
