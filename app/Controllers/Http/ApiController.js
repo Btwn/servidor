@@ -38,16 +38,20 @@ class ApiController {
 		var resultado = []
 
 		union.forEach(item => {
-			resultado.push({
-				id: resultado.length + 1,
-				nombre: item,
-				orig5000: orig5000.indexOf(item) > -1,
-				repo5000: repo5000.indexOf(item) > -1,
-				espe5000: repo5000.indexOf(item) > -1,
-				orig3100: orig3100.indexOf(item) > -1,
-				repo3100: repo3100.indexOf(item) > -1,
-				espe3100: repo3100.indexOf(item) > -1,
-			})
+			if(true || path.extname(item) != '.esp'){
+				resultado.push({
+					id: resultado.length + 1,
+					nombre: item,
+					orig5000: orig5000.indexOf(item) > -1,
+					repo5000: repo5000.indexOf(item) > -1,
+					espe5000: false,
+					orig3100: orig3100.indexOf(item) > -1,
+					repo3100: repo3100.indexOf(item) > -1,
+					espe3100: false,
+				})
+			} else {
+
+			}
 		})
 
 		return resultado

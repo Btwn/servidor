@@ -2,17 +2,15 @@
 const fs = require('fs')
 const path = require('path')
 const { listarArchivos } = require('./app/Tools/OperadoresArchivos/listarArchivos')
-const { leerArchivo } = require('./app/Tools/OperadoresArchivos/procesadorArchivos')
-const { recodificarArchivo } = require('./app/Tools/Codificacion/procesadorCodificacion')
+const { crearNomExtensionTipoEsp } = require('./app/Tools/Path/crearNomExtensionTipoEsp')
+const { crearNombreNomenclaturaArchivoEsp } = require('./app/Tools/Path/crearNomenclatura_MaviEsp')
+const { PathNombreToMavi,PathMaviToNombre } = require('./app/Tools/Path/cambioNombre')
 
-var O5 = 'C:/cadiaz/mavi/intelisis/3100Capacitacion/Reportes MAVI'
-// var files = listarArchivos(O5,['.dlg'])
+let nombre = 'AccesoExpirado_FRM_MAVII.esp'
 
-// files.forEach(file => {
-	let texto = leerArchivo(path.join(O5,'MenuHerrAsignacionAvales.dlg'))
-	let tex = recodificarArchivo(path.join(O5,'MenuHerrAsignacionAvales.dlg'),'latin1')
-	let extracto = tex.match(/TipoDialogo=Men.*$/gim)
-	console.log(extracto)
-// })
+let cambio = PathNombreToMavi(nombre)
 
-// console.log(files)
+// cambio = nombre.replace(path.extname(nombre),'').split('_')
+// cambio = cambio.length > 2 ? cambio[0] + '.' + cambio[1].toLowerCase() : nombre
+
+console.log(cambio)
