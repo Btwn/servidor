@@ -1,0 +1,3 @@
+[submodule "app/Utilerias"]
+	path = app/Utilerias
+	url = https://github.com/Craken420/Utilerias.git

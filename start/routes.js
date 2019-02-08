@@ -16,18 +16,11 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.group(()=>{
-    Route.get('', 'ApiController.All')
-}).prefix('api')
-
-Route.group(()=>{
-   Route.post('arbv/:title','ArbvController.AllTitle')
-
-}).prefix('api')
-
-Route.group(()=>{
-
-})
-
+Route.group(() => {
+	Route.get('/', 'ApiController.index')
+	Route.get('orig5000', 'ApiController.orig5000')
+	Route.get('orig3100', 'ApiController.orig3100')
+	Route.get('repo5000', 'ApiController.repo5000')
+}).prefix('api/files')
 
 Route.any('*', ({view}) =>  view.render('welcome'))
