@@ -9,6 +9,8 @@ class ApiController {
 	async index () {
 		var archivosTmp = [
 			"AAA.rep",
+			"CCC.rep",
+			"ABC.vis",
 			"ABC.frm",
 			"ABC.tbl",
 			"ABCSugerido.tbl",
@@ -36,16 +38,18 @@ class ApiController {
 		var resultado = []
 
 		union.forEach(item => {
+         
 			resultado.push({
 				id: resultado.length + 1,
-				nombre: item
-				// orig5000: archivosTmp.indexOf(x) > -1,
-				// repo5000: ,
-				// orig3100: ,
-				// repo3100: ,
+				nombre: item,
+				orig5000: orig5000.indexOf(item) > -1 ,
+				repo5000: repo5000.indexOf(item) > -1,
+				espe5000: repo5000.indexOf(item) > -1,
+				orig3100: orig3100.indexOf(item) > -1,
+				repo3100: repo3100.indexOf(item) > -1,
+				espe3100: repo3100.indexOf(item) > -1,
 			})
 		})
-
 		return resultado
 	}
 
@@ -61,6 +65,12 @@ class ApiController {
 		return files
 	}
 
+	async espe5000 (){
+		var E5 = Env.get('5000_ESPE')
+		var files = listarArchivos(E5,['.tbl','.vis','.frm','.dlg','.rep','.esp'])
+		return files
+	}
+
 	async orig3100 () {
 		var O3 = Env.get('3100_ORIG')
 		var files = listarArchivos(O3,['.tbl','.vis','.frm','.dlg','.rep','.esp'])
@@ -72,6 +82,8 @@ class ApiController {
 		var files = listarArchivos(R3,['.tbl','.vis','.frm','.dlg','.rep','.esp'])
 		return files
 	}
+
+	
 
 }
 

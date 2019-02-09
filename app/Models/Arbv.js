@@ -4,6 +4,7 @@
 const Model = use('Model')
 
 class Arbv extends Model {
+	
 }
 
 module.exports = Arbv
