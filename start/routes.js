@@ -17,10 +17,15 @@
 const Route = use('Route')
 
 Route.group(() => {
-	Route.get('/', 'ApiController.index')
-	Route.get('orig5000', 'ApiController.orig5000')
-	Route.get('orig3100', 'ApiController.orig3100')
-	Route.get('repo5000', 'ApiController.repo5000')
+	Route.get('/', 'PathController.index')
+	Route.get('orig5000', 'PathController.orig5000')
+	Route.get('repo5000', 'PathController.repo5000')
+	Route.get('orig3100', 'PathController.orig3100')
+	Route.get('repo3100', 'PathController.repo3100')
 }).prefix('api/files')
+
+Route.group(() => {
+	Route.get('/', 'ReadFileController.index')
+}).prefix('api/file')
 
 Route.any('*', ({view}) =>  view.render('welcome'))

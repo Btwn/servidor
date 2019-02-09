@@ -3,7 +3,8 @@
 const Env = use('Env')
 const fs = require('fs')
 const path = require('path')
-const { listarArchivos } = require('C:/Users/arbolanos/Documents/TestGestion/GestionIntelisis/api/Utilerias/OperadoresArchivos/listarArchivos')
+const { listarArchivos } = require('../../Tools/OperadoresArchivos/listarArchivos')
+const { PathMaviToNombre } = require('../../Tools/Path/nomenclaturaMavi')
 
 class ApiController {
 	async index () {
@@ -18,6 +19,7 @@ class ApiController {
 			"ABCSugeridoCat.vis",
 			"AccesoExpirado.frm",
 			"AccesoExpirado_FRM_MAVI.esp",
+			"ActivarDesafectar.esp",
 			"AutorizarCondMAVI.frm",
 			"ComisionesChoferesDMAVI.tbl",
 			"ComisionesChoferesDMAVI.vis",
@@ -38,16 +40,22 @@ class ApiController {
 		var resultado = []
 
 		union.forEach(item => {
-			resultado.push({
-				id: resultado.length + 1,
-				nombre: item,
-				orig5000: orig5000.indexOf(item) > -1,
-				repo5000: repo5000.indexOf(item) > -1,
-				espe5000: repo5000.indexOf(item) > -1,
-				orig3100: orig3100.indexOf(item) > -1,
-				repo3100: repo3100.indexOf(item) > -1,
-				espe3100: repo3100.indexOf(item) > -1,
-			})
+			if(path.extname(item) != '.esp' || PathMaviToNombre(item) == item){
+				resultado.push({
+					id: resultado.length + 1,
+					nombre: item,
+					orig5000: orig5000.indexOf(item) > -1,
+					repo5000: repo5000.indexOf(item) > -1,
+					espe5000: false,
+					orig3100: orig3100.indexOf(item) > -1,
+					repo3100: repo3100.indexOf(item) > -1,
+					espe3100: false,
+				})
+			} else {
+				var key = resultado.findIndex(x => x.nombre == PathMaviToNombre(item))
+				resultado[key].espe5000 = repo5000.indexOf(item) > -1
+				resultado[key].espe3100 = repo3100.indexOf(item) > -1
+			}
 		})
 		return resultado
 	}
@@ -56,7 +64,6 @@ class ApiController {
 		var O5 = Env.get('5000_ORIG')
 		var files = listarArchivos(O5,['.tbl','.vis','.frm','.dlg','.rep','.esp'])
 		return files
-		
 	}
 
 	async repo5000 () {
@@ -64,8 +71,9 @@ class ApiController {
 		var files = listarArchivos(R5,['.tbl','.vis','.frm','.dlg','.rep','.esp'])
 		return files
 	}
+
 	async espe5000 (){
-		var r5 = Env.get('5000_ESPE')
+		var E5 = Env.get('5000_ESPE')
 		var files = listarArchivos(E5,['.tbl','.vis','.frm','.dlg','.rep','.esp'])
 		return files
 	}
@@ -81,6 +89,8 @@ class ApiController {
 		var files = listarArchivos(R3,['.tbl','.vis','.frm','.dlg','.rep','.esp'])
 		return files
 	}
+
+	
 
 }
 

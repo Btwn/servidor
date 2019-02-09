@@ -146,6 +146,10 @@ const rgxExpresiones = {
 
   campoIntlsYcontinua: /^.*?\=<CONTINUA>|<CONTINUA>/gm, //=> SQL002=<CONTINUA>algo
 
+  siTieneComponente: /^\[.*\]/gm, // para determinar si el texto tiene uno o mas componentes
+
+  inComponente: new RegExp(/^\[[\W\w]*?(?=(^\[|^$))/gm),
+
   contenidoComponente: /(?<=\[.*\])[^]*?(?=\[(?!\]))/g, //=> Sin [nom] extrae hasta [
 
   continuaInicio: /(?<=^.*?\=)<CONTINUA>/m, //=> SQL002= <CONTINUA> Algo
