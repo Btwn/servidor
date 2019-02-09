@@ -22,10 +22,11 @@ Route.group(() => {
 	Route.get('repo5000', 'PathController.repo5000')
 	Route.get('orig3100', 'PathController.orig3100')
 	Route.get('repo3100', 'PathController.repo3100')
-}).prefix('api/files')
+}).prefix('api/path')
 
 Route.group(() => {
 	Route.get('/', 'ReadFileController.index')
+	Route.get('/:name', 'ReadFileController.name')
 }).prefix('api/file')
 
 Route.any('*', ({view}) =>  view.render('welcome'))
