@@ -1,9 +1,8 @@
 'use strict'
 /** @type {import('@adonisjs/framework/src/Env')} */
 const Env = use('Env')
-const fs = require('fs')
 const path = require('path')
-const { listarArchivos } = require('../../Tools/OperadoresArchivos/listarArchivos')
+const { listarArchivos } = require('../../Tools/Path/listarArchivos')
 const { PathMaviToNombre } = require('../../Tools/Path/nomenclaturaMavi')
 
 class ApiController {

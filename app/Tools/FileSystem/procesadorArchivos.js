@@ -17,12 +17,13 @@ exports.crearArchivo = (archivo, texto) => {
 }
 
 /*** Lee un archivo de forma sincrona */
-exports.leerArchivo = (archivo) => {
-    fileType = fs.statSync(path.join(archivo))
+exports.leerArchivo = ruta => {
+	ruta = path.normalize(ruta)
+	fileType = fs.statSync(ruta)
 	let texto = ''
-	let codificacion = detectarCodificacion(path.join(archivo))
 	if(fileType.isFile()){
-		texto = fs.readFileSync(path.join(archivo),{encoding:codificacion}) + '\n'
+		let codificacion = detectarCodificacion(ruta)
+		texto = fs.readFileSync(ruta,{encoding:codificacion}) + '\n'
 		texto = texto.replace(/^;.*/gm, '')
 		texto = texto.replace(/^\n[\s\t]*/gm, '')
 	}
