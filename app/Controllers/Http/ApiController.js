@@ -4,6 +4,7 @@ const Env = use('Env')
 const fs = require('fs')
 const path = require('path')
 const { listarArchivos } = require('../../Tools/OperadoresArchivos/listarArchivos')
+const { PathMaviToNombre } = require('../../Tools/Path/nomenclaturaMavi')
 
 class ApiController {
 	async index () {
@@ -18,6 +19,7 @@ class ApiController {
 			"ABCSugeridoCat.vis",
 			"AccesoExpirado.frm",
 			"AccesoExpirado_FRM_MAVI.esp",
+			"ActivarDesafectar.esp",
 			"AutorizarCondMAVI.frm",
 			"ComisionesChoferesDMAVI.tbl",
 			"ComisionesChoferesDMAVI.vis",
@@ -38,7 +40,7 @@ class ApiController {
 		var resultado = []
 
 		union.forEach(item => {
-			if(true || path.extname(item) != '.esp'){
+			if(path.extname(item) != '.esp' || PathMaviToNombre(item) == item){
 				resultado.push({
 					id: resultado.length + 1,
 					nombre: item,
@@ -50,7 +52,9 @@ class ApiController {
 					espe3100: false,
 				})
 			} else {
-
+				var key = resultado.findIndex(x => x.nombre == PathMaviToNombre(item))
+				resultado[key].espe5000 = repo5000.indexOf(item) > -1
+				resultado[key].espe3100 = repo3100.indexOf(item) > -1
 			}
 		})
 
