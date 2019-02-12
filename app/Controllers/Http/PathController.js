@@ -93,6 +93,12 @@ class ApiController {
 		return files
 	}
 
+	async espe5000 (){
+		var E5 = Env.get('5000_ESPE')
+		var files = listarArchivos(E5,['.tbl','.vis','.frm','.dlg','.rep','.esp'])
+		return files
+	}
+
 	async orig3100 () {
 		var O3 = Env.get('3100_ORIG')
 		var files = listarArchivos(O3,['.tbl','.vis','.frm','.dlg','.rep','.esp'])
@@ -104,6 +110,8 @@ class ApiController {
 		var files = listarArchivos(R3,['.tbl','.vis','.frm','.dlg','.rep','.esp'])
 		return files
 	}
+
+	
 
 }
 
