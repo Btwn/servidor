@@ -19,7 +19,7 @@ PathNombreToMavi = nombre => {
 PathMaviToNombre = nombre => {
 	let cambio = nombre.split('_')
 	cambio.pop()
-	return cambio.length == 2 ? cambio.map((x,k) => k == 1 ? x.toLowerCase() : x).join('.') : nombre
+	return cambio.length == 2 && (['frm','vis','tbl','rep','dlg'].indexOf(cambio[1].toLowerCase()) > -1) ? cambio.map((x,k) => k == 1 ? x.toLowerCase() : x).join('.') : nombre
 }
 
 

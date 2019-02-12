@@ -8,6 +8,7 @@ const { PathMaviToNombre } = require('../../Tools/Path/nomenclaturaMavi')
 class ApiController {
 	async index () {
 		var archivosTmp = [
+			"Invd.tbl",
 			"AAA.rep",
 			"CCC.rep",
 			"ABC.vis",
@@ -22,23 +23,29 @@ class ApiController {
 			"AutorizarCondMAVI.frm",
 			"ComisionesChoferesDMAVI.tbl",
 			"ComisionesChoferesDMAVI.vis",
+			"InvD.tbl",
+			"GenerarGastoAnticipo.dlg"
 		]
 		var orig5000 = await this.orig5000()
 		var repo5000 = await this.repo5000()
 		var orig3100 = await this.orig3100()
 		var repo3100 = await this.repo3100()
 
-		orig5000 = orig5000.filter(x => archivosTmp.indexOf(x) > -1)
-		repo5000 = repo5000.filter(x => archivosTmp.indexOf(x) > -1)
-		orig3100 = orig3100.filter(x => archivosTmp.indexOf(x) > -1)
-		repo3100 = repo3100.filter(x => archivosTmp.indexOf(x) > -1)
+		// Bloque para eliminar en produccion
+		orig5000 = orig5000.filter(x => archivosTmp.map(y => y.toLowerCase()).indexOf(x.toLowerCase()) > -1)
+		repo5000 = repo5000.filter(x => archivosTmp.map(y => y.toLowerCase()).indexOf(x.toLowerCase()) > -1)
+		orig3100 = orig3100.filter(x => archivosTmp.map(y => y.toLowerCase()).indexOf(x.toLowerCase()) > -1)
+		repo3100 = repo3100.filter(x => archivosTmp.map(y => y.toLowerCase()).indexOf(x.toLowerCase()) > -1)
 
 		var union = orig5000.concat(repo5000,orig3100,repo3100)
 		union = Array.from(new Set(union)).sort()
 
 		var resultado = []
+		var espResult = []
 
 		union.forEach(item => {
+			// if(path.extname(item) != '.esp'){
+				// console.log(item)
 			if(path.extname(item) != '.esp' || PathMaviToNombre(item) == item){
 				resultado.push({
 					id: resultado.length + 1,
@@ -51,10 +58,24 @@ class ApiController {
 					espe3100: false,
 				})
 			} else {
-				var key = resultado.findIndex(x => x.nombre == PathMaviToNombre(item))
-				resultado[key].espe5000 = repo5000.indexOf(item) > -1
-				resultado[key].espe3100 = repo3100.indexOf(item) > -1
+				espResult.push({
+					nombre: item,
+					name: PathMaviToNombre(item),
+					espe5000: repo5000.indexOf(item) > -1,
+					espe3100: repo3100.indexOf(item) > -1
+				})
 			}
+		})
+		
+		espResult.forEach(item => {
+			var key = resultado.findIndex(x => x.nombre.toLowerCase() == item.name.toLowerCase())
+			try {
+				resultado[key].espe5000 = item.espe5000
+				resultado[key].espe3100 = item.espe3100
+			} catch(err) {
+				console.log(key, item, err)
+			}
+
 		})
 
 		return resultado
