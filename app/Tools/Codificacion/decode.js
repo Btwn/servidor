@@ -1,15 +1,15 @@
 const fs = require('fs')
-const { rgx } = require('../RegEx/jsonRgx')
+const rgx = require('../RegEx/jsonRgx')
 // const {buscarDuplicado} = require('./eliminarDuplicado')
 const Factory = require('../../Models/Factory')
 
 const decode = texto => {
 	let objeto = {}
-	if(!rgx.siTieneComponente.test(texto))
+	if(!rgx.Expresiones.siTieneComponente.test(texto))
 		return objeto
-	let componentes = texto.match(rgx.inComponente)
+	let componentes = texto.match(rgx.Expresiones.inComponente)
 	componentes.forEach(componente => {
-		let componenteTitulo = componente.match(rgx.siTieneComponente)
+		let componenteTitulo = componente.match(rgx.Expresiones.siTieneComponente)
 			.join().replace('[','').replace(']','')
 		if(/^(\w|\().*/gm.test(componente)) {
 			objeto[componenteTitulo] = {}

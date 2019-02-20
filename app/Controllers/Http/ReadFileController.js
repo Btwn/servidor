@@ -5,12 +5,15 @@ const { leerArchivo } = require('../../Tools/FileSystem/procesadorArchivos')
 const { decode,unifica } = require('../../Tools/Codificacion/decode')
 const { PathNombreToMavi } = require('../../Tools/Path/nomenclaturaMavi')
 const { listarArchivos } = require('../../Tools/Path/listarArchivos')
+const rgx = require('../../Tools/RegEx/jsonRgx')
+const { unirCamposConsecutivosComponente } = require('../../Tools/OperarCadenas/unirConsecutivoPorComponente')
+const { extraerContenidoRecodificado } = require('../../Tools/Codificacion/contenidoRecodificado')
 
 class ReadFileController {
 	async index ({ request }) {
 		let resultado = {}
 		let archivo = request.body.nombre
-
+		console.log('algo')
 		if(request.body.orig5000){
 			let texto = leerArchivo(path.join(Env.get('5000_ORIG'),archivo))
 			let deco = decode(texto,path.join(Env.get('5000_ORIG')))
@@ -31,12 +34,16 @@ class ReadFileController {
 		}
 		if(request.body.orig3100){
 			let texto = leerArchivo(path.join(Env.get('3100_ORIG'),archivo))
+			texto = rgx.Expresiones.Borrar.clsComentariosIntls(unirCamposConsecutivosComponente(fileContent)).replace(/&/g, '') +'\n'
 			let deco = decode(texto,path.join(Env.get('3100_ORIG')))
 			resultado.orig3100 = deco
 			console.log('orig3100')
 		}
 		if(request.body.repo3100){
-			let texto = leerArchivo(path.join(Env.get('3100_REPO'),archivo))
+			//let texto = leerArchivo(path.join(Env.get('3100_REPO'),archivo))
+			let a = path.join(Env.get('3100_REPO'),archivo)
+			console.log(a)
+			let texto = rgx.Expresiones.Borrar.clsComentariosIntls(unirCamposConsecutivosComponente(path.join(Env.get('3100_REPO'),archivo))).replace(/&/g, '') +'\n'
 			let deco = decode(texto,path.join(Env.get('3100_REPO')))
 			let une = unifica()
 			resultado.repo3100 = deco
@@ -352,12 +359,19 @@ class ReadFileController {
 		rutas.repo3100 = rutas.repo3100.length > 0 ? path.join(Env.get('3100_REPO'),name) : false
 		rutas.espe3100 = rutas.espe3100.length > 0 ? path.join(Env.get('3100_REPO'),nameExt) : false
 
-		if(rutas.orig5000) rutas.orig5000 = decode(leerArchivo(rutas.orig5000))
-		if(rutas.repo5000) rutas.repo5000 = decode(leerArchivo(rutas.repo5000))
-		if(rutas.espe5000) rutas.espe5000 = decode(leerArchivo(rutas.espe5000))
-		if(rutas.orig3100) rutas.orig3100 = decode(leerArchivo(rutas.orig3100))
-		if(rutas.repo3100) rutas.repo3100 = decode(leerArchivo(rutas.repo3100))
-		if(rutas.espe3100) rutas.espe3100 = decode(leerArchivo(rutas.espe3100))
+		// if(rutas.orig5000) rutas.orig5000 = decode(leerArchivo(rutas.orig5000))
+		// if(rutas.repo5000) rutas.repo5000 = decode(leerArchivo(rutas.repo5000))
+		// if(rutas.espe5000) rutas.espe5000 = decode(leerArchivo(rutas.espe5000))
+		// if(rutas.orig3100) rutas.orig3100 = decode(leerArchivo(rutas.orig3100))
+		// if(rutas.repo3100) rutas.repo3100 = decode(leerArchivo(rutas.repo3100))
+		// if(rutas.espe3100) rutas.espe3100 = decode(leerArchivo(rutas.espe3100))
+
+		if(rutas.orig5000) rutas.orig5000 = decode(rgx.Borrar.clsComentariosIntls(unirCamposConsecutivosComponente(extraerContenidoRecodificado(rutas.orig5000))).replace(/&/g, '') +'\n')
+		if(rutas.repo5000) rutas.repo5000 = decode(rgx.Borrar.clsComentariosIntls(unirCamposConsecutivosComponente(extraerContenidoRecodificado(rutas.repo5000))).replace(/&/g, '') +'\n')
+		if(rutas.espe5000) rutas.espe5000 = decode(rgx.Borrar.clsComentariosIntls(unirCamposConsecutivosComponente(extraerContenidoRecodificado(rutas.espe5000))).replace(/&/g, '') +'\n')
+		if(rutas.orig3100) rutas.orig3100 = decode(rgx.Borrar.clsComentariosIntls(unirCamposConsecutivosComponente(extraerContenidoRecodificado(rutas.orig3100))).replace(/&/g, '') +'\n')
+		if(rutas.repo3100) rutas.repo3100 = decode(rgx.Borrar.clsComentariosIntls(unirCamposConsecutivosComponente(extraerContenidoRecodificado(rutas.repo3100))).replace(/&/g, '') +'\n')
+		if(rutas.espe3100) rutas.espe3100 = decode(rgx.Borrar.clsComentariosIntls(unirCamposConsecutivosComponente(extraerContenidoRecodificado(rutas.espe3100))).replace(/&/g, '') +'\n')
 
 		return rutas
 	}
