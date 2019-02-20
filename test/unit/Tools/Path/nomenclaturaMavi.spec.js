@@ -17,6 +17,7 @@ test('cambio de la nomenclatura mavi al nombre normal', async ({ assert }) => {
   assert.equal(PathMaviToNombre('Abc_TBL_MAVI.esp'),'Abc.tbl')
   assert.equal(PathMaviToNombre('Abc.esp'),'Abc.esp')
   assert.equal(PathMaviToNombre('Abc_MAVI.esp'),'Abc_MAVI.esp')
+  assert.equal(PathMaviToNombre('ArtConDisponible_Anexo_Mavi.esp'),'ArtConDisponible_Anexo_Mavi.esp')
 })
 
 // test('get list of posts', async ({ client }) => {

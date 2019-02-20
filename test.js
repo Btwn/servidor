@@ -1,8 +1,12 @@
+const fetch = require('node-fetch')
 
-const fs = require('fs')
-const path = require('path')
-const { PathMaviToNombre } = require('./app/Tools/Path/nomenclaturaMavi')
+fetch('http://example.com/movies.json')
+	.then(function(response) {
+		return response.json();
+	})
+	.then(function(myJson) {
+		console.log(myJson);
+	});
 
 
-console.log(PathMaviToNombre('ArtConDisponible_Anexo_Mavi.esp'))
-console.log(PathMaviToNombre('CentroCentros_VIS_MAVI.esp'))
+

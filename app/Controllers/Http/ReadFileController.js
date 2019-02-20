@@ -48,17 +48,6 @@ class ReadFileController {
 			resultado.espe3100 = deco
 			console.log('espe3100')
 		}
-
-		// let rutaRepo3100 = Env.get('3100_REPO')
-		// let archivo = 'RM0847MaviCredRelPedXClienteRep.rep'//	windows-1252
-		// let archivo = 'MenuHerrAsignacionAvales.dlg'// UTF-8
-		//ISO-8859-2|PropiedadesListaMAVI.vis
-		//ISO-8859-9|RM0042MesFiltroVis.vis
-		//ISO-8859-1|ActivoFArt_FRM_MAVI.esp
-		// let texto = leerArchivo(path.join(rutaRepo3100,archivo))
-		// let deco = decode(texto,path.join(rutaRepo3100,archivo))
-		// var O5 = Env.get('5000_ORIG')
-		// var files = listarArchivos(O5,['.tbl','.vis','.frm','.dlg','.rep','.esp'])
 		return resultado
 	}
 

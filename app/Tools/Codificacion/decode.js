@@ -1,6 +1,7 @@
 const fs = require('fs')
 const { rgx } = require('../RegEx/jsonRgx')
 // const {buscarDuplicado} = require('./eliminarDuplicado')
+const Factory = require('../../Models/Factory')
 
 const decode = texto => {
 	let objeto = {}
@@ -24,6 +25,20 @@ const decode = texto => {
 			})
 		}
 	})
+	return objeto
+}
+
+const reformar = (objeto, tipo) => {
+	// console.log(objeto)
+	const Tipo = new Factory(tipo)
+	console.log(Tipo)
+	Object.keys(objeto[tipo]).forEach(item => {
+		if(/^Number$/.test(Tipo[item].toString())) {
+
+		}
+		console.log(item, Tipo[item].prototype.toString())
+	})
+	// console.log(Object.keys(objeto[tipo]))
 	return objeto
 }
 
@@ -94,5 +109,6 @@ const unifica = function(original,especial,nombreArchivo){
 }
 
 module.exports.decode     = decode
+module.exports.reformar   = reformar
 module.exports.unifica    = unifica
 

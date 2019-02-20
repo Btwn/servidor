@@ -24,14 +24,18 @@ class ApiController {
 			"ComisionesChoferesDMAVI.tbl",
 			"ComisionesChoferesDMAVI.vis",
 			"InvD.tbl",
-			"GenerarGastoAnticipo.dlg"
+			"GenerarGastoAnticipo.dlg",
+			"CuotasCobMenRVVIS.vis",
+			"Prov.tbl",
+			"Prov.vis",
+			"Prov.frm"
 		]
 		var orig5000 = await this.orig5000()
 		var repo5000 = await this.repo5000()
 		var orig3100 = await this.orig3100()
 		var repo3100 = await this.repo3100()
 
-		// Bloque para eliminar en produccion
+		// Estas 4 lineas hay que eliminarlas, son solo un filtro para tener solo loa aechivos del array archivosTmp
 		orig5000 = orig5000.filter(x => archivosTmp.map(y => y.toLowerCase()).indexOf(x.toLowerCase()) > -1)
 		repo5000 = repo5000.filter(x => archivosTmp.map(y => y.toLowerCase()).indexOf(x.toLowerCase()) > -1)
 		orig3100 = orig3100.filter(x => archivosTmp.map(y => y.toLowerCase()).indexOf(x.toLowerCase()) > -1)
@@ -44,8 +48,6 @@ class ApiController {
 		var espResult = []
 
 		union.forEach(item => {
-			// if(path.extname(item) != '.esp'){
-				// console.log(item)
 			if(path.extname(item) != '.esp' || PathMaviToNombre(item) == item){
 				resultado.push({
 					id: resultado.length + 1,
@@ -73,7 +75,7 @@ class ApiController {
 				resultado[key].espe5000 = item.espe5000
 				resultado[key].espe3100 = item.espe3100
 			} catch(err) {
-				console.log(key, item, err)
+				console.error(key, item, err)
 			}
 
 		})
