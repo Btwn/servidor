@@ -2,7 +2,7 @@
 const path = require('path')
 const Env = use('Env')
 const { leerArchivo } = require('../../Tools/FileSystem/procesadorArchivos')
-const { decode,unifica } = require('../../Tools/Codificacion/decode')
+const { decode,unifica,reformar,tipoArchivo,estructurar } = require('../../Tools/Codificacion/decode')
 const { PathNombreToMavi } = require('../../Tools/Path/nomenclaturaMavi')
 const { listarArchivos } = require('../../Tools/Path/listarArchivos')
 const rgx = require('../../Tools/RegEx/jsonRgx')
@@ -373,7 +373,26 @@ class ReadFileController {
 		if(rutas.repo3100) rutas.repo3100 = decode(rgx.Borrar.clsComentariosIntls(unirCamposConsecutivosComponente(extraerContenidoRecodificado(rutas.repo3100))).replace(/&/g, '') +'\n')
 		if(rutas.espe3100) rutas.espe3100 = decode(rgx.Borrar.clsComentariosIntls(unirCamposConsecutivosComponente(extraerContenidoRecodificado(rutas.espe3100))).replace(/&/g, '') +'\n')
 
+		let tipo = tipoArchivo(ext)
+		// if(rutas.orig5000) rutas.orig5000 = reformar(rutas.orig5000[tipo],rutas.orig5000,tipo)
+		// if(rutas.repo5000) rutas.repo5000 = reformar(rutas.repo5000[tipo],rutas.repo5000,tipo)
+		//if(rutas.espe5000) rutas.espe5000 = reformar(rutas.espe5000[tipo],rutas.espe5000,tipo)
+		// if(rutas.orig3100) rutas.orig3100 = reformar(rutas.orig3100[tipo],rutas.orig3100,tipo)
+		// if(rutas.repo3100) rutas.repo3100 = reformar(rutas.repo3100[tipo],rutas.repo3100,tipo)
+		//if(rutas.espe3100) rutas.espe3100 = reformar(rutas.espe3100[tipo],rutas.espe3100,tipo)
+
+		console.log(tipo)
+		// if(rutas.orig5000) rutas.orig5000 = estructurar(rutas.orig5000[tipo],rutas.orig5000,tipo)
+		if(rutas.orig5000) rutas.orig5000 = estructurar(rutas.orig5000[tipo],rutas.orig5000,tipo)
+		if(rutas.repo5000) rutas.repo5000 = estructurar(rutas.repo5000[tipo],rutas.repo5000,tipo)
+		// if(rutas.espe5000) rutas.espe5000 = estructurar(rutas.espe5000[tipo],rutas.espe5000,tipo)
+		if(rutas.orig3100) rutas.orig3100 = estructurar(rutas.orig3100[tipo],rutas.orig3100,tipo)
+		if(rutas.repo3100) rutas.repo3100 = estructurar(rutas.repo3100[tipo],rutas.repo3100,tipo)
+		// if(rutas.espe3100) rutas.espe3100 = estructurar(rutas.espe3100[tipo],rutas.espe3100,tipo)
+
+		// let o = reformar(rutas.orig5000[tipo],rutas.orig5000,tipo)
 		return rutas
+		// return rutas.orig5000
 	}
 }
 

@@ -28,18 +28,72 @@ const decode = texto => {
 	return objeto
 }
 
-const reformar = (objeto, tipo) => {
-	// console.log(objeto)
-	const Tipo = new Factory(tipo)
-	console.log(Tipo)
-	Object.keys(objeto[tipo]).forEach(item => {
-		if(/^Number$/.test(Tipo[item].toString())) {
+const tipoArchivo = ext => {
+	console.log('tipo: ', ext)
+	if(ext === '.tbl') return 'Tabla'
+	if(ext === '.vis') return 'Vista'
+	if(ext === '.frm') return 'Forma'
+	if(ext === '.rep') return 'Reporte'
+	if(ext === '.dlg') return 'Dialogo'
+	if(ext === '.esp') return 'Esp'
+	return ''
+}
 
+const estructurar = (comp, objeto, tipo) => {
+	var lista = [
+		'Modulos',
+		'ListaCampos',
+		'SQL',
+		'ListaTablas',
+		'ListaEnCaptura',
+		'ListaRelaciones',
+		'ListaCarpetas',
+		'ListaAcciones'
+	]
+	lista = lista.map(x => x.toLowerCase())
+	console.log(tipo, comp)
+	Object.keys(comp).forEach(item => {
+		if(lista.includes(item.toLocaleLowerCase())){
+			if(/\(Lista\)/i.test(objeto[tipo][item]) && objeto[tipo+'.'+item] !== undefined){
+				// console.log(item, objeto[tipo][item])
+				objeto[tipo][item] = Object.values(objeto[tipo+'.'+item]).filter(x => x !== '(Fin)')
+				delete objeto[tipo+'.'+item]
+			} else {
+				// console.log(2, item, objeto[tipo][item])
+				objeto[tipo][item] = objeto[tipo][item].split('<BR>')
+			}
 		}
-		console.log(item, Tipo[item].prototype.toString())
+	})
+	return objeto
+}
+
+const reformar = (comp, objeto, tipo) => {
+	const Tipo = new Factory(tipo)
+	let result = {}
+	Object.keys(comp).forEach(item => {
+		try {
+			if(Tipo[item].type === undefined){
+				throw `No se puede identificar el item: ${item}`
+			}
+			if(Tipo[item].type === 'Number'){
+				result[item] = /\d*/.test(objeto[tipo][item]) ? parseInt(objeto[tipo][item]) : NaN
+			}
+			if(Tipo[item].type === 'String'){
+				result[item] = objeto[tipo][item] !== null ? objeto[tipo][item] : ''
+			}
+			if(Tipo[item].type === 'Array'){
+				if(/\(Lista\)/i.test(objeto[tipo][item]) && objeto['Tabla.'+item] !== undefined){
+					result[item] = Object.values(objeto[tipo+'.'+item]).filter(x => x !== '(Fin)')
+				} else {
+					result[item] = objeto[tipo][item].split('<BR>')
+				}
+			}
+		} catch(err){
+			throw `No se puede identificar el item: ${item}`
+		}
 	})
 	// console.log(Object.keys(objeto[tipo]))
-	return objeto
+	return result
 }
 
 const unifica = function(original,especial,nombreArchivo){
@@ -109,6 +163,7 @@ const unifica = function(original,especial,nombreArchivo){
 }
 
 module.exports.decode     = decode
+module.exports.tipoArchivo= tipoArchivo
 module.exports.reformar   = reformar
 module.exports.unifica    = unifica
-
+module.exports.estructurar= estructurar

@@ -36,10 +36,10 @@ class ApiController {
 		var repo3100 = await this.repo3100()
 
 		// Estas 4 lineas hay que eliminarlas, son solo un filtro para tener solo loa aechivos del array archivosTmp
-		orig5000 = orig5000.filter(x => archivosTmp.map(y => y.toLowerCase()).indexOf(x.toLowerCase()) > -1)
-		repo5000 = repo5000.filter(x => archivosTmp.map(y => y.toLowerCase()).indexOf(x.toLowerCase()) > -1)
-		orig3100 = orig3100.filter(x => archivosTmp.map(y => y.toLowerCase()).indexOf(x.toLowerCase()) > -1)
-		repo3100 = repo3100.filter(x => archivosTmp.map(y => y.toLowerCase()).indexOf(x.toLowerCase()) > -1)
+		// orig5000 = orig5000.filter(x => archivosTmp.map(y => y.toLowerCase()).indexOf(x.toLowerCase()) > -1)
+		// repo5000 = repo5000.filter(x => archivosTmp.map(y => y.toLowerCase()).indexOf(x.toLowerCase()) > -1)
+		// orig3100 = orig3100.filter(x => archivosTmp.map(y => y.toLowerCase()).indexOf(x.toLowerCase()) > -1)
+		// repo3100 = repo3100.filter(x => archivosTmp.map(y => y.toLowerCase()).indexOf(x.toLowerCase()) > -1)
 
 		var union = orig5000.concat(repo5000,orig3100,repo3100)
 		union = Array.from(new Set(union)).sort()
