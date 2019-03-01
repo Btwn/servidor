@@ -29,7 +29,6 @@ const decode = texto => {
 }
 
 const tipoArchivo = ext => {
-	console.log('tipo: ', ext)
 	if(ext === '.tbl') return 'Tabla'
 	if(ext === '.vis') return 'Vista'
 	if(ext === '.frm') return 'Forma'
@@ -48,19 +47,20 @@ const estructurar = (comp, objeto, tipo) => {
 		'ListaEnCaptura',
 		'ListaRelaciones',
 		'ListaCarpetas',
-		'ListaAcciones'
+		'ListaAcciones',
+		'MenuPrincipal',
+		'ListaCalculados'
 	]
 	lista = lista.map(x => x.toLowerCase())
-	console.log(tipo, comp)
 	Object.keys(comp).forEach(item => {
 		if(lista.includes(item.toLocaleLowerCase())){
 			if(/\(Lista\)/i.test(objeto[tipo][item]) && objeto[tipo+'.'+item] !== undefined){
 				// console.log(item, objeto[tipo][item])
-				objeto[tipo][item] = Object.values(objeto[tipo+'.'+item]).filter(x => x !== '(Fin)')
+				objeto[tipo][item] = Object.values(objeto[tipo+'.'+item]).filter(x => x !== '(Fin)').map(x => x.trim())
 				delete objeto[tipo+'.'+item]
 			} else {
 				// console.log(2, item, objeto[tipo][item])
-				objeto[tipo][item] = objeto[tipo][item].split('<BR>')
+				objeto[tipo][item] = objeto[tipo][item].split('<BR>').map(x => x.trim())
 			}
 		}
 	})

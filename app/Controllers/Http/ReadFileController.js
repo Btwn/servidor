@@ -381,7 +381,7 @@ class ReadFileController {
 		// if(rutas.repo3100) rutas.repo3100 = reformar(rutas.repo3100[tipo],rutas.repo3100,tipo)
 		//if(rutas.espe3100) rutas.espe3100 = reformar(rutas.espe3100[tipo],rutas.espe3100,tipo)
 
-		console.log(tipo)
+
 		// if(rutas.orig5000) rutas.orig5000 = estructurar(rutas.orig5000[tipo],rutas.orig5000,tipo)
 		if(rutas.orig5000) rutas.orig5000 = estructurar(rutas.orig5000[tipo],rutas.orig5000,tipo)
 		if(rutas.repo5000) rutas.repo5000 = estructurar(rutas.repo5000[tipo],rutas.repo5000,tipo)
