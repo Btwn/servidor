@@ -1,6 +1,6 @@
 /*** Operadores de cadena ***/
 const { extraerOrdenarCampos } = require('./ordenarCampos')
-const { remplazarContenido } = require('./remplazarContenido')
+const { remplazarContenidoUnido } = require('./remplazarContenido')
 const regEx = require('../RegEx/jsonRgx')
 const { unificarCamposConsecutivos } = require('./unirConsecutivos')
 
@@ -51,7 +51,7 @@ exports.unirCamposConsecutivosComponente = (contenidoArchivo) => {
 
         if (regEx.Expresiones.campoConsecutivoIntls.test(componentesArchivo[componente])) {
 
-            contenidoArchivo = remplazarContenido(contenidoArchivo,
+            contenidoArchivo = remplazarContenidoUnido(contenidoArchivo,
                 componentesArchivo[componente],
                 ordenarUnirCampos(
                     componentesArchivo[componente]
