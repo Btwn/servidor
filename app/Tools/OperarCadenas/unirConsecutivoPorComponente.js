@@ -48,9 +48,7 @@ exports.unirCamposConsecutivosComponente = (contenidoArchivo) => {
     )
 
     for (componente in componentesArchivo) {
-
         if (regEx.Expresiones.campoConsecutivoIntls.test(componentesArchivo[componente])) {
-
             contenidoArchivo = remplazarContenidoUnido(contenidoArchivo,
                 componentesArchivo[componente],
                 ordenarUnirCampos(

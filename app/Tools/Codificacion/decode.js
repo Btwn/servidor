@@ -1,4 +1,5 @@
 const fs = require('fs')
+const path = require('path')
 const rgx = require('../RegEx/jsonRgx')
 // const {buscarDuplicado} = require('./eliminarDuplicado')
 const Factory = require('../../Models/Factory')
@@ -24,6 +25,40 @@ const decode = texto => {
 				}
 			})
 		}
+	})
+	return objeto
+}
+
+Number.prototype.pad = function(size) {
+	var s = String(this);
+	while (s.length < (size || 2)) {s = "0" + s;}
+	return s;
+}
+
+const continua = objeto => {
+	Object.keys(objeto).forEach(com => {
+		let del = []
+		Object.keys(objeto[com]).forEach(item => {
+			if(com=='Inv'){
+			if(/<CONTINUA>$/gi.test(objeto[com][item]) && !/\d{3}$/gi.test(item)){
+				let actual = item
+				let proximo = item.match(/^(\w|\().+(?<!\d)/gm).join('') + 
+					(!/\d{3}$/gi.test(item) ? '002' : (parseInt(item.match(/\d{3}$/gi).join(''))+1).pad(3))
+				
+				while(/<CONTINUA>$/gi.test(objeto[com][actual]) && /^<CONTINUA>/gi.test(objeto[com][proximo])){
+					del.push(proximo)
+					objeto[com][item] = objeto[com][item].replace(/<CONTINUA>$/gi,'')
+					objeto[com][proximo] = objeto[com][proximo].replace(/^<CONTINUA>/gi,'')
+					objeto[com][item] = objeto[com][item] + objeto[com][proximo]
+					actual = proximo
+					proximo = actual.match(/^(\w|\().+(?<!\d)/gm).join('') + 
+						(!/\d{3}$/gi.test(actual) ? '002' : (parseInt(actual.match(/\d{3}$/gi).join(''))+1).pad(3))
+				}
+				objeto[com][item] = objeto[com][item].replace(/<CONTINUA>$/gi,'')
+			}
+			}
+		})
+		del.forEach(d => delete objeto[com][d])
 	})
 	return objeto
 }
@@ -181,8 +216,33 @@ const unifica = function(original,especial,nombreArchivo){
 	return original
 }
 
+var porTipo = function(archivo){
+	var extTipo = ''
+	switch (path.extname(archivo)) {
+		case '.tbl':
+			extTipo = 'Tabla'
+			break
+		case '.vis':
+			extTipo = 'Vista'
+			break
+		case '.frm':
+			extTipo = 'Forma'
+			break
+		case '.rep':
+			extTipo = 'Reporte'
+			break
+		case '.dlg':
+			extTipo = 'Dialogo'
+			break
+		default:
+			break
+	}
+	return extTipo
+}
+
 module.exports.decode     = decode
 module.exports.tipoArchivo= tipoArchivo
 module.exports.reformar   = reformar
 module.exports.unifica    = unifica
 module.exports.estructurar= estructurar
+module.exports.continua   = continua
