@@ -49,20 +49,39 @@ const estructurar = (comp, objeto, tipo) => {
 		'ListaCarpetas',
 		'ListaAcciones',
 		'MenuPrincipal',
-		'ListaCalculados'
+		'ListaCalculados',
+		'ExpresionesAlMostrar',
+		'Expresion'
 	]
 	lista = lista.map(x => x.toLowerCase())
-	Object.keys(comp).forEach(item => {
-		if(lista.includes(item.toLocaleLowerCase())){
-			if(/\(Lista\)/i.test(objeto[tipo][item]) && objeto[tipo+'.'+item] !== undefined){
-				// console.log(item, objeto[tipo][item])
-				objeto[tipo][item] = Object.values(objeto[tipo+'.'+item]).filter(x => x !== '(Fin)').map(x => x.trim())
-				delete objeto[tipo+'.'+item]
-			} else {
-				// console.log(2, item, objeto[tipo][item])
-				objeto[tipo][item] = objeto[tipo][item].split('<BR>').map(x => x.trim())
+	var ignore = [
+		'PosicionInicialIzquierda',
+		'PosicionInicialArriba',
+		'PosicionInicialAltura',
+		'PosicionInicialAncho',
+		'Icono',
+		'AccionesTamanoBoton',
+		'PosicionInicialAlturaCliente'
+	]
+	ignore = ignore.map(x => x.toLowerCase())
+	var del = []
+	Object.keys(objeto).forEach(com => {
+		Object.keys(objeto[com]).forEach(item => {
+			if(lista.includes(item.toLocaleLowerCase())){
+				if(/\(Lista\)/i.test(objeto[com][item]) && objeto[com+'.'+item] !== undefined){
+					objeto[com][item] = Object.values(objeto[com+'.'+item]).filter(x => x !== '(Fin)').map(x => x.trim())
+					del.push(com+'.'+item)
+				} else {
+					objeto[com][item] = objeto[com][item].split('<BR>').map(x => x.trim())
+				}
 			}
-		}
+			if(ignore.includes(item.toLowerCase())){
+				objeto[com][item] = 'irrelevante'
+			}
+		})
+	})
+	del.forEach(d => {
+		delete objeto[d]
 	})
 	return objeto
 }
