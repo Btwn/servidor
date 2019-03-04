@@ -39,14 +39,16 @@ const continua = objeto => {
 	Object.keys(objeto).forEach(com => {
 		let del = []
 		Object.keys(objeto[com]).forEach(item => {
-			if(com=='Inv'){
+			if(/\d{3}$/gi.test(item)){
+				del.push(item)
+			}
 			if(/<CONTINUA>$/gi.test(objeto[com][item]) && !/\d{3}$/gi.test(item)){
 				let actual = item
 				let proximo = item.match(/^(\w|\().+(?<!\d)/gm).join('') + 
 					(!/\d{3}$/gi.test(item) ? '002' : (parseInt(item.match(/\d{3}$/gi).join(''))+1).pad(3))
 				
 				while(/<CONTINUA>$/gi.test(objeto[com][actual]) && /^<CONTINUA>/gi.test(objeto[com][proximo])){
-					del.push(proximo)
+					
 					objeto[com][item] = objeto[com][item].replace(/<CONTINUA>$/gi,'')
 					objeto[com][proximo] = objeto[com][proximo].replace(/^<CONTINUA>/gi,'')
 					objeto[com][item] = objeto[com][item] + objeto[com][proximo]
@@ -55,7 +57,6 @@ const continua = objeto => {
 						(!/\d{3}$/gi.test(actual) ? '002' : (parseInt(actual.match(/\d{3}$/gi).join(''))+1).pad(3))
 				}
 				objeto[com][item] = objeto[com][item].replace(/<CONTINUA>$/gi,'')
-			}
 			}
 		})
 		del.forEach(d => delete objeto[com][d])
