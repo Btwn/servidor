@@ -204,7 +204,7 @@ const rgxExtractor = {
 
   extraerNomTipoEsp:      ruta  => { return ruta.replace(rgxExpresiones.nomYtipoEsp, '')},
 
-  extraerPrimerasDosLineas:  texto => { return texto.match(/.*?\r\n.*?\r\n/).join('')},
+  extraerPrimerasDosLineas:  texto => { return texto.match(/.*?\r\n.*?\r\n/mi).join('')},
 
   extraerPrimeraLinea:       texto => { return texto.match(/.*/).join('')},
 
