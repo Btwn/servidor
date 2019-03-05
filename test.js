@@ -1,8 +1,19 @@
-const { unirCamposConsecutivosComponente } = require('./app/Tools/OperarCadenas/unirConsecutivoPorComponente')
-const { extraerContenidoRecodificado } = require('./app/Tools/Codificacion/contenidoRecodificado')
 
-var ruta = 'C:/cadiaz/mavi/intelisis/3100Capacitacion/Codigo Original/EmbarqueD.vis'
 
-// console.log(
-	unirCamposConsecutivosComponente(extraerContenidoRecodificado(ruta))
-// )
+var n = 5
+var z= 2
+console.log(Number.isNaN(n))
+
+Number.prototype.algo = function(p){
+	return p + ' hola'
+}
+
+Number.prototype.pad = function(p){
+	return p + ' hola'
+}
+
+Number.prototype.s = 'qwe'
+
+console.log(n.algo('qwerty'))
+
+console.log(n.s, z.s)

@@ -46,9 +46,7 @@ const continua = objeto => {
 				let actual = item
 				let proximo = item.match(/^(\w|\().+(?<!\d)/gm).join('') + 
 					(!/\d{3}$/gi.test(item) ? '002' : (parseInt(item.match(/\d{3}$/gi).join(''))+1).pad(3))
-				
 				while(/<CONTINUA>$/gi.test(objeto[com][actual]) && /^<CONTINUA>/gi.test(objeto[com][proximo])){
-					
 					objeto[com][item] = objeto[com][item].replace(/<CONTINUA>$/gi,'')
 					objeto[com][proximo] = objeto[com][proximo].replace(/^<CONTINUA>/gi,'')
 					objeto[com][item] = objeto[com][item] + objeto[com][proximo]
@@ -87,7 +85,17 @@ const estructurar = (comp, objeto, tipo) => {
 		'MenuPrincipal',
 		'ListaCalculados',
 		'ExpresionesAlMostrar',
-		'Expresion'
+		'Expresion',
+		'ListaRefrescar',
+		'ListaOpciones',
+		'LlaveLocal',
+		'LlaveRemota',
+		'FiltroListaEstatus',
+		'ListaOrden',
+		'CamposBusquedaRapida',
+		'ListaCamposAValidar',
+		'AntesExpresiones',
+		'ValidacionTablas'
 	]
 	lista = lista.map(x => x.toLowerCase())
 	var ignore = [
