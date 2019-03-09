@@ -8,6 +8,7 @@ const { listarArchivos } = require('../../Tools/Path/listarArchivos')
 const rgx = require('../../Tools/RegEx/jsonRgx')
 const { unirCamposConsecutivosComponente } = require('../../Tools/OperarCadenas/unirConsecutivoPorComponente')
 const { extraerContenidoRecodificado } = require('../../Tools/Codificacion/contenidoRecodificado')
+const { equals } = require('../../Tools/OperadorObjetos/compararObjetos')
 
 class ReadFileController {
 	async index ({ request }) {
@@ -390,6 +391,8 @@ class ReadFileController {
 		if(rutas.repo3100) rutas.repo3100 = estructurar(rutas.repo3100[tipo],rutas.repo3100,tipo)
 		// if(rutas.espe3100) rutas.espe3100 = estructurar(rutas.espe3100[tipo],rutas.espe3100,tipo)
 
+
+		rutas.diffOriginal = equals(rutas.orig5000, rutas.orig3100)
 		// let o = reformar(rutas.orig5000[tipo],rutas.orig5000,tipo)
 		return rutas
 		// return rutas.orig5000

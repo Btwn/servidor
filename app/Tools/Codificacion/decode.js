@@ -105,7 +105,8 @@ const estructurar = (comp, objeto, tipo) => {
 		'PosicionInicialAncho',
 		'Icono',
 		'AccionesTamanoBoton',
-		'PosicionInicialAlturaCliente'
+		'PosicionInicialAlturaCliente',
+		'0','1','2'
 	]
 	ignore = ignore.map(x => x.toLowerCase())
 	var del = []
