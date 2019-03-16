@@ -95,7 +95,9 @@ const estructurar = (comp, objeto, tipo) => {
 		'CamposBusquedaRapida',
 		'ListaCamposAValidar',
 		'AntesExpresiones',
-		'ValidacionTablas'
+		'ValidacionTablas',
+		'ActivoCondicion',
+		'Comentarios'
 	]
 	lista = lista.map(x => x.toLowerCase())
 	var ignore = [
