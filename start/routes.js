@@ -29,4 +29,17 @@ Route.group(() => {
 	Route.get('/:name', 'ReadFileController.name')
 }).prefix('api/file')
 
+Route.group(() => {
+	Route.get('/:ruta/:name', 'ReadFileController.leer')
+}).prefix('api/leer')
+
+Route.group(() => {
+	Route.get('/:ruta/:name', 'ReadFileController.juntar')
+}).prefix('api/join')
+
+Route.group(() => {
+	Route.get('/', 'FormaController.index')
+	Route.get('/:name', 'FormaController.name')
+}).prefix('api/forma')
+
 Route.any('*', ({view}) =>  view.render('welcome'))

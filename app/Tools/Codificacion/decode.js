@@ -133,6 +133,59 @@ const estructurar = (comp, objeto, tipo) => {
 	return objeto
 }
 
+const filtrar = objeto => {
+	return objeto
+}
+
+const acomodar = (objeto) => {
+	var lista = [
+		'Modulos',
+		'ListaCampos',
+		'SQL',
+		'ListaTablas',
+		'ListaEnCaptura',
+		'ListaRelaciones',
+		'ListaCarpetas',
+		'ListaAcciones',
+		'MenuPrincipal',
+		'ListaCalculados',
+		'ExpresionesAlMostrar',
+		'Expresion',
+		'ListaRefrescar',
+		'ListaOpciones',
+		'LlaveLocal',
+		'LlaveRemota',
+		'FiltroListaEstatus',
+		'ListaOrden',
+		'CamposBusquedaRapida',
+		'ListaCamposAValidar',
+		'AntesExpresiones',
+		'ValidacionTablas',
+		'ActivoCondicion',
+		'Comentarios'
+	]
+	lista = lista.map(x => x.toLowerCase())
+	var ignore = [
+		'PosicionInicialIzquierda',
+		'PosicionInicialArriba',
+		'PosicionInicialAltura',
+		'PosicionInicialAncho',
+		'Icono',
+		'AccionesTamanoBoton',
+		'PosicionInicialAlturaCliente',
+		'0','1','2'
+	]
+	ignore = ignore.map(x => x.toLowerCase())
+	var del = []
+
+	let o = {}
+	Object.keys(objeto).forEach(com => {
+		if(/^\w+\.(tbl|vis|frm|dlg|rep)\//gim.test(com))
+			o[com] = objeto[com]
+	})
+	return o
+}
+
 const reformar = (comp, objeto, tipo) => {
 	const Tipo = new Factory(tipo)
 	let result = {}
@@ -258,3 +311,5 @@ module.exports.reformar   = reformar
 module.exports.unifica    = unifica
 module.exports.estructurar= estructurar
 module.exports.continua   = continua
+module.exports.acomodar   = acomodar
+module.exports.filtrar    = filtrar

@@ -34,31 +34,26 @@ const { detectarCodificacion, recodificarArchivo } = require('./app/Tools/Codifi
 const { listarArchivos } = require('./app/Tools/Path/listarArchivos')
 
 var ruta = 'C:/cadiaz/mavi/intelisis/5000Capacitacion/Reportes MAVI/'
+//var ruta = '\\\\172.16.202.39\\Versiones\\5000Capacitacion\\Reportes MAVI\\'
 var files = listarArchivos(ruta)
 var arr = []
 
 
+//let cod = detectarCodificacion(ruta + 'RM0062FinHistorAsigUnidFrm.frm')
+
+//console.log(cod)
+
+
 files.forEach(file => {
 	let cod = detectarCodificacion(ruta + file)
+	//console.log(cod, file)
 	if(cod !== 'Latin1'){
-		let cont = fs.readFileSync(ruta + file, cod)
-		fs.writeFileSync(ruta + file, cont, {encoding:'latin1'})
-		arr.push(file)
+		console.log(cod, file)
+		// let cont = fs.readFileSync(ruta + file, cod)
+		// fs.writeFileSync(ruta + file, cont, {encoding:'latin1'})
+		// arr.push(file)
 	}
 
 })
 fs.appendFileSync('test.txt', arr)
 
-// fs.readFile('C:/cadiaz/dev/tests/codificacion/ActivoFCat.vis','utf8',function(err, data){
-// 	if (err) throw err
-//   console.log(data)
-// })
-
-// function cambiarCodificacion (pat, file, codificacion) {
-// 	console.log('antes',detectarCodificacion(pat), path.dirname(pat))
-// 	// let content = new Buffer(recodificarArchivo(pat, codificacion),codificacion)
-// 	// fs.writeFileSync(ruta + file,
-// 	// 		content.toString(codificacion)
-// 	// )
-// 	console.log('despues',detectarCodificacion(pat))
-// }
