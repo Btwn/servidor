@@ -10,6 +10,7 @@ const rgx = require('../../Tools/RegEx/jsonRgx')
 const { unirCamposConsecutivosComponente } = require('../../Tools/OperarCadenas/unirConsecutivoPorComponente')
 const { extraerContenidoRecodificado } = require('../../Tools/Codificacion/contenidoRecodificado')
 const { equals } = require('../../Tools/OperadorObjetos/compararObjetos')
+const I = require('../../Tools/Archivos/intelisis')
 
 class ReadFileController {
 	async index ({ request }) {
@@ -64,20 +65,22 @@ class ReadFileController {
 		let name = request.params.name
 		let ruta = path.join(Env.get(request.params.ruta.toUpperCase()), name)
 
-		let objeto
-		objeto = fs.existsSync(ruta) ? continua(decode(leerArchivo(ruta))) : {}
-
-		return objeto
+		return fs.existsSync(ruta) ? I.amoldar(ruta) : {}
 	}
 
 	async juntar ({ request }) {
 		let name = request.params.name
-		let ruta = request.params.ruta.match(/^\d+/gi).join()
+		let ruta = path.join(Env.get(request.params.ruta.toUpperCase()), name)
+		let version = request.params.ruta.match(/^\d+/gi).join()
 		let nameEsp = PathNombreToMavi(name)
+		let rutaRepo = path.join(Env.get(version + '_REPO'), nameEsp)
 
-		let orig = this.leer({request:{params: {name: name,ruta: ruta+'_orig'}}})
-		let repo = this.leer({request:{params: {name: nameEsp,ruta: ruta+'_repo'}}})
-		return repo
+		let orig = fs.existsSync(ruta) ? I.lector(ruta) : {}
+		let repo = fs.existsSync(rutaRepo) ? I.lector(rutaRepo) : {}
+		let union = I.unir({original:orig, reporte:repo, nombre:name})
+		// let orig = this.leer({request:{params: {name: name,ruta: ruta+'_orig'}}})
+		// let repo = this.leer({request:{params: {name: nameEsp,ruta: ruta+'_repo'}}})
+		return union
 	}
 
 	async name ({ request }) {

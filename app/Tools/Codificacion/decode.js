@@ -3,6 +3,7 @@ const path = require('path')
 const rgx = require('../RegEx/jsonRgx')
 // const {buscarDuplicado} = require('./eliminarDuplicado')
 const Factory = require('../../Models/Factory')
+const R = require('rambda')
 
 const decode = texto => {
 	let objeto = {}
@@ -72,45 +73,54 @@ const tipoArchivo = ext => {
 	return ''
 }
 
-const estructurar = (comp, objeto, tipo) => {
-	var lista = [
-		'Modulos',
-		'ListaCampos',
-		'SQL',
-		'ListaTablas',
-		'ListaEnCaptura',
-		'ListaRelaciones',
-		'ListaCarpetas',
-		'ListaAcciones',
-		'MenuPrincipal',
-		'ListaCalculados',
-		'ExpresionesAlMostrar',
-		'Expresion',
-		'ListaRefrescar',
-		'ListaOpciones',
-		'LlaveLocal',
-		'LlaveRemota',
-		'FiltroListaEstatus',
-		'ListaOrden',
-		'CamposBusquedaRapida',
-		'ListaCamposAValidar',
-		'AntesExpresiones',
-		'ValidacionTablas',
-		'ActivoCondicion',
-		'Comentarios'
-	]
-	lista = lista.map(x => x.toLowerCase())
-	var ignore = [
-		'PosicionInicialIzquierda',
-		'PosicionInicialArriba',
-		'PosicionInicialAltura',
-		'PosicionInicialAncho',
-		'Icono',
-		'AccionesTamanoBoton',
-		'PosicionInicialAlturaCliente',
-		'0','1','2'
-	]
-	ignore = ignore.map(x => x.toLowerCase())
+const lista = [
+	'Modulos',
+	'ListaCampos',
+	'SQL',
+	'ListaTablas',
+	'ListaEnCaptura',
+	'ListaRelaciones',
+	'ListaCarpetas',
+	'ListaAcciones',
+	'MenuPrincipal',
+	'ListaCalculados',
+	'ExpresionesAlMostrar',
+	'Expresion',
+	'ListaRefrescar',
+	'ListaOpciones',
+	'LlaveLocal',
+	'LlaveRemota',
+	'FiltroListaEstatus',
+	'ListaOrden',
+	'CamposBusquedaRapida',
+	'ListaCamposAValidar',
+	'AntesExpresiones',
+	'ValidacionTablas',
+	'ActivoCondicion',
+	'Comentarios',
+	'ListaAccionesMultiples'
+].map(x => x.toLowerCase())
+
+const ignore = [
+	'PosicionInicialIzquierda',
+	'PosicionInicialArriba',
+	'PosicionInicialAltura',
+	'PosicionInicialAncho',
+	'Icono',
+	'AccionesTamanoBoton',
+	'PosicionInicialAlturaCliente',
+	'0','1','2'
+].map(x => x.toLowerCase())
+
+const genera = [
+	'ListaCampos',
+	'ListaCarpetas',
+	'ListaRelaciones',
+	'ListaAcciones',
+	'ListaAccionesMultiples'
+].map(x => x.toLowerCase())
+
+const estructurar = (objeto) => {
 	var del = []
 	Object.keys(objeto).forEach(com => {
 		Object.keys(objeto[com]).forEach(item => {
@@ -122,9 +132,9 @@ const estructurar = (comp, objeto, tipo) => {
 					objeto[com][item] = objeto[com][item].split('<BR>').map(x => x.trim())
 				}
 			}
-			if(ignore.includes(item.toLowerCase())){
-				objeto[com][item] = 'irrelevante'
-			}
+			// if(ignore.includes(item.toLowerCase())){
+			// 	objeto[com][item] = 'irrelevante'
+			// }
 		})
 	})
 	del.forEach(d => {
@@ -137,53 +147,82 @@ const filtrar = objeto => {
 	return objeto
 }
 
-const acomodar = (objeto) => {
-	var lista = [
-		'Modulos',
-		'ListaCampos',
-		'SQL',
-		'ListaTablas',
-		'ListaEnCaptura',
-		'ListaRelaciones',
-		'ListaCarpetas',
-		'ListaAcciones',
-		'MenuPrincipal',
-		'ListaCalculados',
-		'ExpresionesAlMostrar',
-		'Expresion',
-		'ListaRefrescar',
-		'ListaOpciones',
-		'LlaveLocal',
-		'LlaveRemota',
-		'FiltroListaEstatus',
-		'ListaOrden',
-		'CamposBusquedaRapida',
-		'ListaCamposAValidar',
-		'AntesExpresiones',
-		'ValidacionTablas',
-		'ActivoCondicion',
-		'Comentarios'
-	]
-	lista = lista.map(x => x.toLowerCase())
-	var ignore = [
-		'PosicionInicialIzquierda',
-		'PosicionInicialArriba',
-		'PosicionInicialAltura',
-		'PosicionInicialAncho',
-		'Icono',
-		'AccionesTamanoBoton',
-		'PosicionInicialAlturaCliente',
-		'0','1','2'
-	]
-	ignore = ignore.map(x => x.toLowerCase())
-	var del = []
-
+const acomodar = objeto => {
+	// return objeto
 	let o = {}
-	Object.keys(objeto).forEach(com => {
-		if(/^\w+\.(tbl|vis|frm|dlg|rep)\//gim.test(com))
-			o[com] = objeto[com]
+	let tipo = Object.keys(objeto)[0]
+	o[tipo] = {}
+	Object.keys(objeto[tipo]).forEach(item => {
+			o[tipo][item] = objeto[tipo][item]
+		if(lista.includes(item.toLocaleLowerCase())){
+			if(/\(Lista\)/i.test(objeto[tipo][item]) && objeto[tipo+'.'+item] !== undefined){
+				o[tipo][item] = Object.values(objeto[tipo+'.'+item]).filter(x => x !== '(Fin)').map(x => x.trim())
+			} else {
+				o[tipo][item] = objeto[tipo][item].split('<BR>').map(x => x.trim())
+			}
+		}
 	})
+	
+	let lis = []
+	//lis.push(tipo)
+	Object.keys(o[tipo]).forEach(item => {
+		if(porBase(tipo)===item){
+			lis = lis.concat(o[tipo][item])
+		} else if(genera.includes(item.toLowerCase())){
+			let prefijo = item.replace(/Lista/gi,'')
+			let arr = o[tipo][item].map(x => prefijo + '.' + x)
+			lis = lis.concat(arr)
+		}
+	})
+
+	lis.forEach(item => {
+		o[item] = objeto[item]
+	})
+
+	lis.forEach(comp => {
+		Object.keys(o[comp]).forEach(item => {
+			if(lista.includes(item.toLocaleLowerCase())){
+				if(/\(Lista\)/i.test(objeto[comp][item]) && objeto[comp+'.'+item] !== undefined){
+					o[comp][item] = Object.values(objeto[comp+'.'+item]).filter(x => x !== '(Fin)').map(x => x.trim())
+				} else {
+					o[comp][item] = objeto[comp][item].split('<BR>').map(x => x.trim())
+				}
+			}
+		})
+	})
+
+	let lis2 = []
+
+	lis.forEach(tipo => {
+		Object.keys(o[tipo]).forEach(item => {
+			if(genera.includes(item.toLowerCase()) && item.toLowerCase() === 'listaaccionesmultiples'){
+				o[tipo][item].forEach(x => {
+					lis2 = lis2.concat(tipo+'.'+x)
+				})
+			}
+		})
+	})
+
+	lis2.forEach(item => {
+		o[item] = objeto[item]
+	})
+
 	return o
+}
+
+const reacomodar = objeto => {
+	Object.keys(objeto).forEach(comp => {
+		Object.keys(objeto[comp]).forEach(item => {
+			if(lista.includes(item.toLocaleLowerCase()) && !Array.isArray(objeto[comp][item])){
+				if(/\(Lista\)/i.test(objeto[comp][item]) && objeto[comp+'.'+item] !== undefined){
+					objeto[comp][item] = Object.values(objeto[comp+'.'+item]).filter(x => x !== '(Fin)').map(x => x.trim())
+				} else {
+						objeto[comp][item] = objeto[comp][item].split('<BR>').map(x => x.trim())
+				}
+			}
+		})
+	})
+	return objeto
 }
 
 const reformar = (comp, objeto, tipo) => {
@@ -305,6 +344,49 @@ var porTipo = function(archivo){
 	return extTipo
 }
 
+var porBase = function(tipo){
+	var extTipo = ''
+	switch (tipo) {
+		case 'Tabla':
+			extTipo = 'ListaCampos'
+			break
+		case 'Vista':
+			extTipo = 'ListaCampos'
+			break
+		case 'Forma':
+			extTipo = 'ListaCarpetas'
+			break
+		default:
+			break
+	}
+	return extTipo
+}
+
+var junta = function(o) {
+	original = o.original
+	especial = o.reporte
+	nombre = o.nombre
+	let arr = Object.keys(especial)
+		.filter(comp => new RegExp(`${nombre}\\/`,`gi`).test(comp))
+
+	arr.forEach(comp => {
+		//console.log(comp,original[comp]);
+		if (original[comp] === undefined)
+			original[comp] = {}
+		try {
+			Object.keys(especial[comp]).forEach(item => {
+				//console.log(comp, item);
+				original[comp][item] = especial[comp][item]
+			})
+		} catch(err) {
+			let a = nombre+'/'+comp
+			console.log('err', comp, a, err)
+		}
+	})
+
+	return original
+}
+
 module.exports.decode     = decode
 module.exports.tipoArchivo= tipoArchivo
 module.exports.reformar   = reformar
@@ -313,3 +395,5 @@ module.exports.estructurar= estructurar
 module.exports.continua   = continua
 module.exports.acomodar   = acomodar
 module.exports.filtrar    = filtrar
+module.exports.junta      = junta
+module.exports.reacomodar = reacomodar

@@ -39,7 +39,7 @@ Route.group(() => {
 
 Route.group(() => {
 	Route.get('/', 'FormaController.index')
-	Route.get('/:name', 'FormaController.name')
+	Route.get('/:version/:name', 'FormaController.name')
 }).prefix('api/forma')
 
 Route.any('*', ({view}) =>  view.render('welcome'))
