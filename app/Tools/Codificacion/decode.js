@@ -109,7 +109,9 @@ const ignore = [
 	'Icono',
 	'AccionesTamanoBoton',
 	'PosicionInicialAlturaCliente',
-	'0','1','2'
+	'0','1','2',
+	'VentanaIzquierda',
+	'VentanaArriba'
 ].map(x => x.toLowerCase())
 
 const genera = [
@@ -132,9 +134,10 @@ const estructurar = (objeto) => {
 					objeto[com][item] = objeto[com][item].split('<BR>').map(x => x.trim())
 				}
 			}
-			// if(ignore.includes(item.toLowerCase())){
-			// 	objeto[com][item] = 'irrelevante'
-			// }
+			if(ignore.includes(item.toLowerCase())){
+				objeto[com][item] = 'irrelevante'
+			}
+
 		})
 	})
 	del.forEach(d => {
@@ -153,7 +156,7 @@ const acomodar = objeto => {
 	let tipo = Object.keys(objeto)[0]
 	o[tipo] = {}
 	Object.keys(objeto[tipo]).forEach(item => {
-			o[tipo][item] = objeto[tipo][item]
+		o[tipo][item] = objeto[tipo][item]
 		if(lista.includes(item.toLocaleLowerCase())){
 			if(/\(Lista\)/i.test(objeto[tipo][item]) && objeto[tipo+'.'+item] !== undefined){
 				o[tipo][item] = Object.values(objeto[tipo+'.'+item]).filter(x => x !== '(Fin)').map(x => x.trim())
@@ -162,6 +165,20 @@ const acomodar = objeto => {
 			}
 		}
 	})
+
+	if(tipo==='Reporte' && objeto[tipo]['VistaEspecial']==='S'){
+		Object.keys(objeto['Vista']).forEach(item => {
+			o['Vista']=objeto['Vista']
+			// o['Vista'][item] = objeto['Vista'][item]
+			// if(lista.includes(item.toLocaleLowerCase())){
+			// 	if(/\(Lista\)/i.test(objeto['Vista'][item]) && objeto['Vista'+'.'+item] !== undefined){
+			// 		o['Vista'][item] = Object.values(objeto['Vista'+'.'+item]).filter(x => x !== '(Fin)').map(x => x.trim())
+			// 	} else {
+			// 		o['Vista'][item] = objeto['Vista'][item].split('<BR>').map(x => x.trim())
+			// 	}
+			// }
+		})
+	}
 	
 	let lis = []
 	//lis.push(tipo)

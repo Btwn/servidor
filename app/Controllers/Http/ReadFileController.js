@@ -127,13 +127,12 @@ class ReadFileController {
 
 
 		// if(rutas.orig5000) rutas.orig5000 = estructurar(rutas.orig5000[tipo],rutas.orig5000,tipo)
-		if(rutas.orig5000) rutas.orig5000 = estructurar(rutas.orig5000[tipo],rutas.orig5000,tipo)
-		if(rutas.repo5000) rutas.repo5000 = estructurar(rutas.repo5000[tipo],rutas.repo5000,tipo)
+		if(rutas.orig5000) rutas.orig5000 = estructurar(rutas.orig5000)
+		if(rutas.repo5000) rutas.repo5000 = estructurar(rutas.repo5000)
 		// if(rutas.espe5000) rutas.espe5000 = estructurar(rutas.espe5000[tipo],rutas.espe5000,tipo)
-		if(rutas.orig3100) rutas.orig3100 = estructurar(rutas.orig3100[tipo],rutas.orig3100,tipo)
-		if(rutas.repo3100) rutas.repo3100 = estructurar(rutas.repo3100[tipo],rutas.repo3100,tipo)
+		if(rutas.orig3100) rutas.orig3100 = estructurar(rutas.orig3100)
+		if(rutas.repo3100) rutas.repo3100 = estructurar(rutas.repo3100)
 		// if(rutas.espe3100) rutas.espe3100 = estructurar(rutas.espe3100[tipo],rutas.espe3100,tipo)
-
 
 		rutas.diffOriginal = equals(rutas.orig5000, rutas.orig3100)
 		// let o = reformar(rutas.orig5000[tipo],rutas.orig5000,tipo)

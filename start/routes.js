@@ -42,4 +42,21 @@ Route.group(() => {
 	Route.get('/:version/:name', 'FormaController.name')
 }).prefix('api/forma')
 
+Route.group(() => {
+	Route.get('/:version/:name', 'FormaController.repo')
+}).prefix('api/repo')
+
+Route.group(() => {
+	Route.get('/:version/:perfil', 'MenuController.perfil')
+}).prefix('api/menu')
+
+Route.group(() => {
+	Route.get('/:version', 'EspecialController.especial')
+}).prefix('api/especial')
+
+/////////////////////////////////////////////////////
+Route.group(() => {
+	Route.get('/:version/:file', 'JsonReadController.file')
+}).prefix('json/read')
+
 Route.any('*', ({view}) =>  view.render('welcome'))
