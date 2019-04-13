@@ -31,6 +31,7 @@
     "@adonisjs/shield": "^1.0.8",
     "@adonisjs/vow": "^1.0.17",
     "chardet": "^0.7.0",
+    "js-sha1": "^0.6.0",
     "mssql": "4.1.0",
     "rambda": "^2.4.1",
     "vue": "^2.5.11",

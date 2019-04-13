@@ -54,6 +54,12 @@ Route.group(() => {
 	Route.get('/:version', 'EspecialController.especial')
 }).prefix('api/especial')
 
+Route.group(() => {
+	Route.get('/', 'SqlController.index'),
+	Route.get('/diferiencia', 'SqlController.diferiencia')
+	Route.get('/:name', 'SqlController.name')
+}).prefix('api/sql')
+
 /////////////////////////////////////////////////////
 Route.group(() => {
 	Route.get('/:version/:file', 'JsonReadController.file')
