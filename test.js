@@ -49,11 +49,11 @@ files.forEach(file => {
 	//console.log(cod, file)
 	if(cod !== 'Latin1'){
 		console.log(cod, file)
-		// let cont = fs.readFileSync(ruta + file, cod)
-		// fs.writeFileSync(ruta + file, cont, {encoding:'latin1'})
-		// arr.push(file)
+		let cont = fs.readFileSync(ruta + file, cod)
+		fs.writeFileSync(ruta + file, cont, {encoding:'latin1'})
+		arr.push(file)
 	}
 
 })
-fs.appendFileSync('test.txt', arr)
+fs.appendFileSync('test.txt', arr.join('\n'))
 

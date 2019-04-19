@@ -24,7 +24,11 @@ class EspecialController {
 			iguales: [],
 			diferentes: []
 		}
-		archivos = archivos.filter(x => x !== 'EliminarConta.esp' && x !== 'FechaPolizaConciliado.esp')
+		archivos = archivos.filter(
+			x => x !== 'EliminarConta.esp' && 
+			x !== 'FechaPolizaConciliado.esp' &&
+			x !== 'PlaneadorMacroMAVI.tbl'
+		)
 		archivos.forEach(arh => {
 			// if (arh === 'CteLD.tbl'){
 			// 	let oo3 = amoldar(path.join(Env.get('3100_ORIG'),arh))

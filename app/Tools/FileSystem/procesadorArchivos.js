@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const { detectarCodificacion } = require('../Codificacion/procesadorCodificacion')
-const Env = use('Env')
+//const Env = use('Env')
 const { PathNombreToMavi } = require('../Path/nomenclaturaMavi')
 const { continua, decode } = require('../Codificacion/decode')
 //const I = require('../Archivos/intelisis')

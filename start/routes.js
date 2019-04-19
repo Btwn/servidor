@@ -60,6 +60,11 @@ Route.group(() => {
 	Route.get('/:name', 'SqlController.name')
 }).prefix('api/sql')
 
+Route.group(() => {
+	Route.get('/', 'JoinController.index')
+	Route.get('/:version/:name', 'JoinController.name')
+}).prefix('api/json')
+
 /////////////////////////////////////////////////////
 Route.group(() => {
 	Route.get('/:version/:file', 'JsonReadController.file')

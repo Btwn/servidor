@@ -1,0 +1,10 @@
+ActivoFCat_FRM_MAVI.esp
+ActivoFCat_TBL_MAVI.esp
+Condicion_FRM_MAVI.esp
+EmpresaConceptoValidar_FRM_MAVI.esp
+ExplorarInvSerieLote_FRM_MAVI.esp
+ExplorarVentaD_FRM_MAVI.esp
+MenuHerrAsignacionAvales.dlg
+RM1154ConfigReanalisis.dlg
+SerieLotePropExistencia_VIS_MAVI.esp
+SerieLote_VIS_MAVI.espMenuCfgConsecutivos_DLG_MAVI.esp
