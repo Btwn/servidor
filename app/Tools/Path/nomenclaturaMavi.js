@@ -7,7 +7,7 @@ const path = require('path')
  * @return {string}
  ***/
 PathNombreToMavi = nombre => {
-	return nombre.split('.').map((x,k) => k==1 ? x.toUpperCase() : x).join('_') + '_MAVI.esp'
+	return nombre.split('.').map((x,k) => k==1 ? x.toUpperCase() : x).join('_') + '_COMER.esp'
 }
 
 /***

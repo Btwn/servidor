@@ -4,13 +4,15 @@ const { leerArchivo } = require('./app/Tools/FileSystem/procesadorArchivos')
 const { PathNombreToMavi } = require('./app/Tools/Path/nomenclaturaMavi')
 const { decode, continua } = require('./app/Tools/Codificacion/decode')
 
-var rutaO3 = 'D:/Dev/mavi/3100Casa/Codigo Original'
-var rutaR3 = 'D:/Dev/mavi/5000Casa/Reportes MAVI'
+var rutaO3 = 'D:/Dev/mavi/3100Comercializadora/Codigo Original'
+var rutaR3 = 'D:/Dev/mavi/5000Comercializadora/Reportes Comercializadora'
 
-var archivo = 'Cte.frm'
-var linea = 'ListaAcciones'//ListaCarpetas ListaAcciones ListaEnCaptura
-var carpeta = 'Otros'
-var regex = new RegExp(/^ListaAcciones.*/gim)
+var archivo = 'Plaza.vis'
+//	ListaCampos	SQL ListaRelaciones
+//	ListaCalculados ListaTablas
+var linea = 'SQL'//ListaCarpetas ListaAcciones ListaEnCaptura
+var carpeta = 'Detalle'
+var regex = new RegExp(/^SQL.*/gim)
 fs.writeFileSync('esp.txt', '')
 //	^\[.*/(?!Acciones).*\]
 
